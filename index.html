@@ -1,0 +1,594 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GRIT | Build wealth the right way</title>
+  <meta name="description" content="GRIT pays you real cash for building healthy financial habits. Save an emergency fund, build credit, start investing. One mission at a time. Join the waitlist." />
+  <meta property="og:title" content="GRIT | Build wealth the right way" />
+  <meta property="og:description" content="GRIT pays you real cash for building healthy financial habits. Join the waitlist at gritsteady.com." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://gritsteady.com" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    /* -- GRIT design tokens (from the production app) --------------- */
+    :root {
+      --bg:        #0e1211;
+      --surface:   #161a18;
+      --surface-2: #1b211e;
+      --green:     #7fd8b0;   /* app accent green */
+      --green-dim: rgba(127, 216, 176, 0.12);
+      --green-brd: rgba(127, 216, 176, 0.22);
+      --green-deep:#1d4b2f;   /* brand deep green */
+      --pink:      #e078b0;   /* app points accent, used sparingly */
+      --text:      #f2f4f2;
+      --muted:     #9aa39d;
+      --faint:     #6b736e;
+      --border:    rgba(255, 255, 255, 0.08);
+      --radius:    14px;
+      --font-body: 'Archivo', -apple-system, sans-serif;
+      --font-mono: 'IBM Plex Mono', monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    ::selection { background: var(--green); color: var(--bg); }
+
+    .container { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+
+    /* -- Nav -------------------------------------------------------- */
+    nav {
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(14, 18, 17, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 24px; max-width: 1080px; margin: 0 auto;
+    }
+    .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .logo span {
+      font-weight: 800; font-size: 20px; letter-spacing: 4px; color: var(--green);
+    }
+    .nav-links { display: flex; align-items: center; gap: 28px; }
+    .nav-links a {
+      color: var(--muted); text-decoration: none; font-size: 14px; font-weight: 500;
+      transition: color 0.15s;
+    }
+    .nav-links a:hover { color: var(--text); }
+    .nav-cta {
+      background: var(--green); color: var(--bg) !important;
+      padding: 9px 18px; border-radius: 10px; font-weight: 600 !important;
+      transition: opacity 0.15s;
+    }
+    .nav-cta:hover { opacity: 0.88; }
+
+    /* -- Hero ------------------------------------------------------- */
+    .hero {
+      position: relative; overflow: hidden;
+      padding: 96px 0 88px;
+      background:
+        radial-gradient(ellipse 900px 480px at 70% -10%, rgba(127, 216, 176, 0.07), transparent),
+        radial-gradient(ellipse 600px 400px at 10% 110%, rgba(29, 75, 47, 0.25), transparent);
+    }
+    .hero-grid {
+      position: absolute; inset: 0; pointer-events: none;
+      background-image: radial-gradient(rgba(127, 216, 176, 0.05) 1px, transparent 1px);
+      background-size: 26px 26px;
+      mask-image: linear-gradient(to bottom, black, transparent 85%);
+      -webkit-mask-image: linear-gradient(to bottom, black, transparent 85%);
+    }
+    .hero-inner { position: relative; max-width: 720px; }
+    .badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: var(--font-mono); font-size: 12px; letter-spacing: 1.5px;
+      text-transform: uppercase; color: var(--green);
+      background: var(--green-dim); border: 1px solid var(--green-brd);
+      padding: 6px 14px; border-radius: 99px; margin-bottom: 26px;
+      animation: fadeUp 0.5s ease both;
+    }
+    .badge::before {
+      content: ''; width: 6px; height: 6px; border-radius: 50%;
+      background: var(--green); animation: pulse 2s ease infinite;
+    }
+    h1 {
+      font-size: clamp(44px, 7vw, 76px); font-weight: 900;
+      line-height: 1.02; letter-spacing: -2px; margin-bottom: 22px;
+      animation: fadeUp 0.5s ease 0.08s both;
+    }
+    h1 .accent { color: var(--green); }
+    .hero-sub {
+      font-size: 19px; color: var(--muted); max-width: 560px;
+      margin-bottom: 36px; animation: fadeUp 0.5s ease 0.16s both;
+    }
+    .hero-sub strong { color: var(--text); font-weight: 600; }
+
+    /* -- Signup form ------------------------------------------------ */
+    .signup { animation: fadeUp 0.5s ease 0.24s both; max-width: 480px; }
+    .signup-row { display: flex; gap: 10px; }
+    .signup input {
+      flex: 1; min-width: 0;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 12px; padding: 15px 18px;
+      font-family: var(--font-body); font-size: 15px; color: var(--text);
+      outline: none; transition: border-color 0.15s;
+    }
+    .signup input::placeholder { color: var(--faint); }
+    .signup input:focus { border-color: var(--green-brd); }
+    .signup button {
+      background: var(--green); color: var(--bg); border: none;
+      border-radius: 12px; padding: 15px 24px;
+      font-family: var(--font-body); font-size: 15px; font-weight: 700;
+      cursor: pointer; white-space: nowrap; transition: opacity 0.15s, transform 0.1s;
+    }
+    .signup button:hover { opacity: 0.88; }
+    .signup button:active { transform: scale(0.98); }
+    .signup-note {
+      font-size: 13px; color: var(--faint); margin-top: 12px;
+    }
+    .signup-success {
+      display: none; align-items: center; gap: 10px;
+      background: var(--green-dim); border: 1px solid var(--green-brd);
+      border-radius: 12px; padding: 15px 18px; font-size: 15px; color: var(--green);
+    }
+    .signup-error {
+      display: none; font-size: 13px; color: var(--pink); margin-top: 12px;
+    }
+    .signup.done .signup-row, .signup.done .signup-note { display: none; }
+    .signup.done .signup-success { display: flex; }
+    .signup.error .signup-error { display: block; }
+
+    /* -- Stats strip ------------------------------------------------ */
+    .stats { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .stats-inner {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      max-width: 1080px; margin: 0 auto;
+    }
+    .stat {
+      padding: 34px 24px; text-align: center;
+      border-right: 1px solid var(--border);
+    }
+    .stat:last-child { border-right: none; }
+    .stat-num {
+      font-family: var(--font-mono); font-size: 34px; font-weight: 500;
+      color: var(--green); margin-bottom: 6px;
+    }
+    .stat-lbl { font-size: 14px; color: var(--muted); }
+    .stats-src {
+      text-align: center; font-size: 11px; color: var(--faint);
+      padding: 0 24px 18px; font-family: var(--font-mono);
+    }
+
+    /* -- Sections --------------------------------------------------- */
+    section { padding: 96px 0; }
+    .kicker {
+      font-family: var(--font-mono); font-size: 12px; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--green); margin-bottom: 14px;
+    }
+    h2 {
+      font-size: clamp(30px, 4.5vw, 44px); font-weight: 800;
+      letter-spacing: -1px; line-height: 1.12; margin-bottom: 18px;
+    }
+    .section-sub { font-size: 17px; color: var(--muted); max-width: 620px; }
+
+    /* -- How it works ----------------------------------------------- */
+    .steps {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 18px; margin-top: 52px;
+    }
+    .step {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 30px 26px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .step:hover { border-color: var(--green-brd); transform: translateY(-3px); }
+    .step-num {
+      font-family: var(--font-mono); font-size: 13px; color: var(--faint);
+      margin-bottom: 18px;
+    }
+    .step-icon { margin-bottom: 18px; }
+    .step h3 { font-size: 19px; font-weight: 700; margin-bottom: 10px; }
+    .step p { font-size: 14.5px; color: var(--muted); }
+    .loop-line {
+      margin-top: 34px; text-align: center; font-size: 15px; color: var(--muted);
+    }
+    .loop-line strong { color: var(--green); font-weight: 600; }
+
+    /* -- Mission ---------------------------------------------------- */
+    .mission { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .mission-inner { max-width: 780px; margin: 0 auto; text-align: center; }
+    .mission-statement {
+      font-size: clamp(22px, 3.4vw, 32px); font-weight: 700;
+      line-height: 1.35; letter-spacing: -0.5px; margin: 26px 0 44px;
+    }
+    .mission-statement .accent { color: var(--green); }
+    .acronym {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px;
+    }
+    .acro-card {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 12px; padding: 20px 12px;
+    }
+    .acro-letter {
+      font-size: 30px; font-weight: 900; color: var(--green); line-height: 1;
+      margin-bottom: 6px;
+    }
+    .acro-word { font-size: 13px; color: var(--muted); font-weight: 500; }
+
+    /* -- About / story ---------------------------------------------- */
+    .about-grid {
+      display: grid; grid-template-columns: 1fr 1.4fr; gap: 64px; align-items: start;
+    }
+    .about-body p { color: var(--muted); font-size: 16.5px; margin-bottom: 18px; }
+    .about-body p strong { color: var(--text); font-weight: 600; }
+    .about-sig {
+      margin-top: 28px; padding-top: 22px; border-top: 1px solid var(--border);
+    }
+    .about-sig .name { font-weight: 700; font-size: 15px; }
+    .about-sig .role { font-family: var(--font-mono); font-size: 12.5px; color: var(--faint); margin-top: 3px; }
+
+    /* -- Trust ------------------------------------------------------ */
+    .trust-cards {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 52px;
+    }
+    .trust-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 28px 26px;
+    }
+    .trust-card h3 { font-size: 17px; font-weight: 700; margin-bottom: 10px; color: var(--green); }
+    .trust-card p { font-size: 14.5px; color: var(--muted); }
+
+    /* -- Final CTA -------------------------------------------------- */
+    .cta {
+      background:
+        radial-gradient(ellipse 700px 380px at 50% 120%, rgba(127, 216, 176, 0.09), transparent);
+      border-top: 1px solid var(--border);
+      text-align: center;
+    }
+    .cta .signup { margin: 36px auto 0; }
+    .cta .signup-row { justify-content: center; }
+
+    /* -- Footer ----------------------------------------------------- */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 44px 0 52px;
+    }
+    .footer-inner {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      gap: 30px; flex-wrap: wrap;
+    }
+    .footer-brand p { font-size: 13px; color: var(--faint); margin-top: 10px; max-width: 320px; }
+    .footer-meta { text-align: right; font-size: 13px; color: var(--faint); }
+    .footer-meta a { color: var(--muted); text-decoration: none; }
+    .footer-meta a:hover { color: var(--green); }
+    .footer-fine {
+      margin-top: 34px; padding-top: 20px; border-top: 1px solid var(--border);
+      font-size: 11.5px; color: var(--faint); font-family: var(--font-mono);
+    }
+
+    /* -- Motion ----------------------------------------------------- */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+    .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.55s ease, transform 0.55s ease; }
+    .reveal.in { opacity: 1; transform: translateY(0); }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+      .reveal { opacity: 1; transform: none; }
+    }
+
+    /* -- Responsive ------------------------------------------------- */
+    @media (max-width: 860px) {
+      .nav-links a:not(.nav-cta) { display: none; }
+      .hero { padding: 64px 0 60px; }
+      section { padding: 64px 0; }
+      .steps, .trust-cards { grid-template-columns: 1fr; }
+      .stats-inner { grid-template-columns: 1fr; }
+      .stat { border-right: none; border-bottom: 1px solid var(--border); }
+      .stat:last-child { border-bottom: none; }
+      .about-grid { grid-template-columns: 1fr; gap: 30px; }
+      .acronym { grid-template-columns: repeat(2, 1fr); }
+      .signup-row { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- -- Nav ------------------------------------------------------- -->
+  <nav>
+    <div class="nav-inner">
+      <a class="logo" href="#top" aria-label="GRIT home">
+        <svg width="22" height="26" viewBox="0 0 28 32" fill="none" aria-hidden="true">
+          <line x1="14" y1="1" x2="14" y2="31" stroke="#7fd8b0" stroke-width="3.5" stroke-linecap="round"/>
+          <line x1="14" y1="10" x2="3" y2="21" stroke="#7fd8b0" stroke-width="3.5" stroke-linecap="round"/>
+          <line x1="14" y1="10" x2="25" y2="21" stroke="#7fd8b0" stroke-width="3.5" stroke-linecap="round"/>
+        </svg>
+        <span>GRIT</span>
+      </a>
+      <div class="nav-links">
+        <a href="#how">How it works</a>
+        <a href="#mission">Mission</a>
+        <a href="#about">About</a>
+        <a class="nav-cta" href="#join">Join the waitlist</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- -- Hero ------------------------------------------------------ -->
+  <header class="hero" id="top">
+    <div class="hero-grid" aria-hidden="true"></div>
+    <div class="container hero-inner">
+      <div class="badge">Coming soon</div>
+      <h1>Build wealth<br /><span class="accent">the right way.</span></h1>
+      <p class="hero-sub">
+        GRIT pays you <strong>real cash</strong> for building healthy financial habits.
+        Save an emergency fund, build your credit, start investing. One mission at a time.
+      </p>
+      <form class="signup" id="signup-hero" novalidate>
+        <div class="signup-row">
+          <input type="email" name="email" placeholder="your@email.com" required autocomplete="email" aria-label="Email address" />
+          <button type="submit">Join the waitlist</button>
+        </div>
+        <div class="signup-success">You're on the list. We'll reach out when it's your turn.</div>
+        <p class="signup-error">Something went wrong. Email us at qquach9797@gmail.com and we'll add you.</p>
+        <p class="signup-note">Free to use. No spam. Just a heads up when we launch.</p>
+      </form>
+    </div>
+  </header>
+
+  <!-- -- Stats ----------------------------------------------------- -->
+  <div class="stats">
+    <div class="stats-inner">
+      <div class="stat reveal">
+        <div class="stat-num">72%</div>
+        <div class="stat-lbl">of Gen Z live paycheck to paycheck</div>
+      </div>
+      <div class="stat reveal">
+        <div class="stat-num">50%</div>
+        <div class="stat-lbl">of young adults we surveyed have no emergency fund</div>
+      </div>
+      <div class="stat reveal">
+        <div class="stat-num">$1.83T</div>
+        <div class="stat-lbl">in US student loan debt</div>
+      </div>
+    </div>
+    <div class="stats-src">Sources: MarketWatch Guides 2025, GRIT user research, Federal Reserve</div>
+  </div>
+
+  <!-- -- How it works ---------------------------------------------- -->
+  <section id="how">
+    <div class="container">
+      <div class="kicker reveal">How it works</div>
+      <h2 class="reveal">Most money apps show you the problem.<br />GRIT pays you to fix it.</h2>
+      <p class="section-sub reveal">
+        You already know what you should be doing with your money. Knowing isn't the problem. Doing is.
+        GRIT turns the right money moves into missions with real rewards.
+      </p>
+      <div class="steps">
+        <div class="step reveal">
+          <div class="step-num">01</div>
+          <div class="step-icon">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#7fd8b0" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="0.8" fill="#7fd8b0"/>
+            </svg>
+          </div>
+          <h3>Pick a mission</h3>
+          <p>Choose a goal that actually matters to you. Your first mission: build a $500 emergency fund over about 90 days.</p>
+        </div>
+        <div class="step reveal">
+          <div class="step-num">02</div>
+          <div class="step-icon">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#7fd8b0" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M3 17l5-5 4 4 8-8"/><path d="M14 8h6v6"/>
+            </svg>
+          </div>
+          <h3>Build the habit</h3>
+          <p>Link your bank securely and save at your own pace. GRIT tracks your progress automatically. We can see your progress, but we never touch your money.</p>
+        </div>
+        <div class="step reveal">
+          <div class="step-num">03</div>
+          <div class="step-icon">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#7fd8b0" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="3" y="7" width="18" height="13" rx="2.5"/><path d="M3 11h18"/><path d="M8 3.5L12 7l4-3.5"/>
+            </svg>
+          </div>
+          <h3>Earn real cash</h3>
+          <p>Hit your weekly checkpoints and finish the mission. We pay you real money. Not points. Not badges. Cash.</p>
+        </div>
+      </div>
+      <p class="loop-line reveal">Then you start the next mission. That's the whole idea. <strong>Small wins that stack.</strong></p>
+    </div>
+  </section>
+
+  <!-- -- Mission --------------------------------------------------- -->
+  <section class="mission" id="mission">
+    <div class="container mission-inner">
+      <div class="kicker reveal">Our mission</div>
+      <p class="mission-statement reveal">
+        To help young adults build lasting financial habits by rewarding the
+        <span class="accent">small, consistent actions</span> that build real financial security.
+      </p>
+      <div class="acronym">
+        <div class="acro-card reveal"><div class="acro-letter">G</div><div class="acro-word">Goals</div></div>
+        <div class="acro-card reveal"><div class="acro-letter">R</div><div class="acro-word">Resilience</div></div>
+        <div class="acro-card reveal"><div class="acro-letter">I</div><div class="acro-word">Independence</div></div>
+        <div class="acro-card reveal"><div class="acro-letter">T</div><div class="acro-word">Tenacity</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- -- About ----------------------------------------------------- -->
+  <section id="about">
+    <div class="container about-grid">
+      <div>
+        <div class="kicker reveal">About</div>
+        <h2 class="reveal">Why GRIT exists</h2>
+      </div>
+      <div class="about-body">
+        <p class="reveal">
+          At 18, I got my first credit card and made every mistake. Not because I was careless,
+          but because no one taught me how money works. I learned the hard way, and it took years
+          to undo those mistakes.
+        </p>
+        <p class="reveal">
+          Most of us are in the same boat. We know what we should do. Save more, build credit,
+          start investing. But knowing was never the problem. Doing is. Sports betting and crypto
+          made gambling exciting. <strong>Nobody made building wealth exciting.</strong>
+        </p>
+        <p class="reveal">
+          That's what GRIT is. We make the right money moves feel like winning, and we pay you
+          for them. Real wealth takes grit. And grit deserves to be rewarded.
+        </p>
+        <div class="about-sig reveal">
+          <div class="name">Quang Quach</div>
+          <div class="role">Founder, GRIT Financial Inc.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- -- Trust ----------------------------------------------------- -->
+  <section style="padding-top: 0;">
+    <div class="container">
+      <div class="kicker reveal">Built on trust</div>
+      <h2 class="reveal">On your side. That's the business model.</h2>
+      <p class="section-sub reveal">
+        A finance app only works if you can trust it. So here's exactly how GRIT works, in plain language.
+      </p>
+      <div class="trust-cards">
+        <div class="trust-card reveal">
+          <h3>Free to use</h3>
+          <p>GRIT doesn't cost you anything. When you complete a mission and you're ready for a financial product, like your first credit card or brokerage account, we connect you with a trusted partner and they pay us a referral fee. We only make money when you make progress.</p>
+        </div>
+        <div class="trust-card reveal">
+          <h3>No ads. No selling your data.</h3>
+          <p>Ever. Our entire model depends on being the app that's actually on your side. Selling your data would break that, so we don't.</p>
+        </div>
+        <div class="trust-card reveal">
+          <h3>We never touch your money</h3>
+          <p>Bank connections are read-only and handled by the same secure infrastructure the major finance apps use. GRIT can see your progress toward a mission. It cannot move your money.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- -- Final CTA ------------------------------------------------- -->
+  <section class="cta" id="join">
+    <div class="container">
+      <div class="kicker reveal">Get early access</div>
+      <h2 class="reveal">Be first in line.</h2>
+      <p class="section-sub reveal" style="margin: 0 auto;">
+        The app is in development right now. Join the waitlist and we'll let you know the moment it's ready.
+      </p>
+      <form class="signup" id="signup-cta" novalidate>
+        <div class="signup-row">
+          <input type="email" name="email" placeholder="your@email.com" required autocomplete="email" aria-label="Email address" />
+          <button type="submit">Join the waitlist</button>
+        </div>
+        <div class="signup-success">You're on the list. We'll reach out when it's your turn.</div>
+        <p class="signup-error">Something went wrong. Email us at qquach9797@gmail.com and we'll add you.</p>
+        <p class="signup-note">No spam. Just a heads up when we launch.</p>
+      </form>
+    </div>
+  </section>
+
+  <!-- -- Footer ---------------------------------------------------- -->
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <a class="logo" href="#top" aria-label="GRIT home">
+            <svg width="18" height="22" viewBox="0 0 28 32" fill="none" aria-hidden="true">
+              <line x1="14" y1="1" x2="14" y2="31" stroke="#7fd8b0" stroke-width="3.5" stroke-linecap="round"/>
+              <line x1="14" y1="10" x2="3" y2="21" stroke="#7fd8b0" stroke-width="3.5" stroke-linecap="round"/>
+              <line x1="14" y1="10" x2="25" y2="21" stroke="#7fd8b0" stroke-width="3.5" stroke-linecap="round"/>
+            </svg>
+            <span style="font-size: 16px;">GRIT</span>
+          </a>
+          <p>Build wealth the right way. Real cash rewards for real financial habits.</p>
+        </div>
+        <div class="footer-meta">
+          <div><a href="mailto:qquach9797@gmail.com">qquach9797@gmail.com</a></div>
+          <div style="margin-top: 6px;">gritsteady.com</div>
+        </div>
+      </div>
+      <div class="footer-fine">
+        &copy; 2026 GRIT Financial Inc. All rights reserved. GRIT is not a bank. Bank connections
+        are read-only and handled by trusted infrastructure partners. GRIT is currently in development.
+        Missions and rewards described on this page reflect the planned product.
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    /* ----------------------------------------------------------------
+       Waitlist signup.
+       WIRING NOTES (for dev):
+       - Point WAITLIST_ENDPOINT at the Go backend once a handler exists,
+         e.g. POST /api/waitlist accepting {"email": "..."}.
+       - Until then, any 4xx/5xx or network failure shows the fallback
+         message with the hello@ email, so the page degrades gracefully
+         even as a purely static deploy.
+       - Alternative if backend wiring is later: swap the fetch for a
+         Formspree/Buttondown action and delete this script.
+       ---------------------------------------------------------------- */
+    const WAITLIST_ENDPOINT = '/api/waitlist';
+
+    document.querySelectorAll('form.signup').forEach(form => {
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        form.classList.remove('error');
+        const input = form.querySelector('input[name="email"]');
+        const email = (input.value || '').trim();
+        if (!email || !email.includes('@') || !email.includes('.')) {
+          input.focus();
+          return;
+        }
+        const btn = form.querySelector('button');
+        btn.disabled = true;
+        btn.textContent = 'Joining...';
+        try {
+          const res = await fetch(WAITLIST_ENDPOINT, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: email, source: 'gritsteady.com' })
+          });
+          if (!res.ok) throw new Error('bad status');
+          form.classList.add('done');
+        } catch (err) {
+          form.classList.add('error');
+          btn.disabled = false;
+          btn.textContent = 'Join the waitlist';
+        }
+      });
+    });
+
+    /* Scroll reveal */
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(en => {
+        if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  </script>
+</body>
+</html>
