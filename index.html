@@ -349,7 +349,7 @@
           <button type="submit">Join the waitlist</button>
         </div>
         <div class="signup-success">You're on the list. We'll reach out when it's your turn.</div>
-        <p class="signup-error">Something went wrong. Email us at qquach9797@gmail.com and we'll add you.</p>
+        <p class="signup-error">Something went wrong. Email us at support@gritsteady.com and we'll add you.</p>
         <p class="signup-note">Free to use. No spam. Just a heads up when we launch.</p>
       </form>
     </div>
@@ -505,7 +505,7 @@
           <button type="submit">Join the waitlist</button>
         </div>
         <div class="signup-success">You're on the list. We'll reach out when it's your turn.</div>
-        <p class="signup-error">Something went wrong. Email us at qquach9797@gmail.com and we'll add you.</p>
+        <p class="signup-error">Something went wrong. Email us at support@gritsteady.com and we'll add you.</p>
         <p class="signup-note">No spam. Just a heads up when we launch.</p>
       </form>
     </div>
@@ -527,7 +527,7 @@
           <p>Build wealth the right way. Real cash rewards for real financial habits.</p>
         </div>
         <div class="footer-meta">
-          <div><a href="mailto:qquach9797@gmail.com">qquach9797@gmail.com</a></div>
+          <div><a href="mailto:support@gritsteady.com">support@gritsteady.com</a></div>
           <div style="margin-top: 6px;">gritsteady.com</div>
         </div>
       </div>
@@ -543,15 +543,16 @@
     /* ----------------------------------------------------------------
        Waitlist signup.
        WIRING NOTES (for dev):
-       - Point WAITLIST_ENDPOINT at the Go backend once a handler exists,
+       - This is a static GitHub Pages deploy (no backend), so submissions
+         go through FormSubmit's AJAX endpoint, which emails each signup
+         to the address below. The first submission triggers a one-time
+         activation email that the owner must confirm.
+       - If a Go backend lands later, point WAITLIST_ENDPOINT back at it,
          e.g. POST /api/waitlist accepting {"email": "..."}.
-       - Until then, any 4xx/5xx or network failure shows the fallback
-         message with the hello@ email, so the page degrades gracefully
-         even as a purely static deploy.
-       - Alternative if backend wiring is later: swap the fetch for a
-         Formspree/Buttondown action and delete this script.
+       - Any 4xx/5xx or network failure shows the fallback message with
+         the contact email, so the page degrades gracefully.
        ---------------------------------------------------------------- */
-    const WAITLIST_ENDPOINT = '/api/waitlist';
+    const WAITLIST_ENDPOINT = 'https://formsubmit.co/ajax/support@gritsteady.com';
 
     document.querySelectorAll('form.signup').forEach(form => {
       form.addEventListener('submit', async (e) => {
@@ -569,8 +570,14 @@
         try {
           const res = await fetch(WAITLIST_ENDPOINT, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email: email, source: 'gritsteady.com' })
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+            body: JSON.stringify({
+              email: email,
+              source: 'gritsteady.com',
+              _subject: 'New GRIT waitlist signup',
+              _template: 'table',
+              _captcha: 'false'
+            })
           });
           if (!res.ok) throw new Error('bad status');
           form.classList.add('done');
